@@ -2,7 +2,7 @@
 include_once("index_header.php");
 ?>
 
-    <form method="post" class="container mt-4" style="max-width: 500px;">
+    <form method="post" action="auth.php" class="container mt-4" style="max-width: 500px;">
         <h2 class="mb-4">Auth</h2>
         <div class="mb-3">
             <label for="email">Email</label>

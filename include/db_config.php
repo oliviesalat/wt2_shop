@@ -1,13 +1,6 @@
 <?php
 
 
-/*
-$hostname = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "shop";
-*/
-
 class Database {
     private static ?mysqli $instance = null;
     private function __construct() {}
