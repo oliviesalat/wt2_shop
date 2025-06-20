@@ -2,9 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+if ($_SESSION['is_logged'] === false) {
+    unset($_SESSION['email']);
+}
 include_once("include/db_config.php");
-
-
 ?>
 
 <!doctype html>
@@ -28,8 +29,20 @@ include_once("include/db_config.php");
             <a class="navbar-brand" href="auth_page.php">Auth</a>
         </div>
     </div>
+    <div class="text-light">
+        <?php
+
+        if ($_SESSION['is_logged'] === true) {
+            echo "<a class='navbar-brand' href='profile.php'> Hello" . htmlspecialchars($_SESSION['email']) . "</a>";
+        }
+        ?>
+
+    </div>
 
 </nav>
+<?php
+var_dump($_SESSION);
+?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

@@ -2,7 +2,7 @@
 include_once('index_header.php');
 $db = Database::db_connect();
 
-$email = $_POST["email"];
+$email = trim($_POST["email"]);
 $password = $_POST["password"];
 
 $stmt = $db->prepare("SELECT password FROM users WHERE email = ?");
@@ -19,13 +19,15 @@ if ($stmt->fetch()) {
     if (password_verify($password, $password_hash)) {
         $_SESSION['is_logged'] = true;
         $_SESSION['email'] = $email;
-        echo "<h2>You have logged in </h2>";
+        $stmt->close();
+        header("Location: profile.php");
+        exit;
     } else {
         $_SESSION['is_logged'] = false;
+        $stmt->close();
+        header("Location: auth_page.php");
+        exit;
     }
-} else {
-    $_SESSION['is_logged'] = false;
 }
-$stmt->close();
 
 include_once('index_footer.php');

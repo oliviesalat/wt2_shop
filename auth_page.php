@@ -1,5 +1,11 @@
 <?php
 include_once("index_header.php");
+
+if ($_SESSION['is_logged'] === false) {
+    echo "You are not logged in!";
+} else {
+    header("Location: profile.php");
+}
 ?>
 
     <form method="post" action="auth.php" class="container mt-4" style="max-width: 500px;">
