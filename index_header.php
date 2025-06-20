@@ -25,7 +25,7 @@ include_once("include/db_config.php");
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.php">Main</a>
-            <a class="navbar-brand" href="auth.php">Auth</a>
+            <a class="navbar-brand" href="auth_page.php">Auth</a>
         </div>
     </div>
 
