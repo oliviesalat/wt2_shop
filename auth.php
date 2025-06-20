@@ -1,5 +1,5 @@
 <?php
-include_once("index_top.php");
+include_once("index_header.php");
 ?>
 
 <form method="post">
@@ -11,4 +11,4 @@ include_once("index_top.php");
 </form>
 
 <?php
-include_once("index_bottom.php");
+include_once("index_footer.php");
