@@ -1,5 +1,5 @@
 <?php
-include_once("index_header.php");
+include_once(__DIR__ . "/../templates/index_header.php");
 
 $db = Database::db_connect();
 
@@ -26,4 +26,4 @@ try {
         </a>
     </div>
 <?php
-include_once("index_footer.php");
+include_once(__DIR__ . "/../templates/index_footer.php");

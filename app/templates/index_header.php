@@ -1,11 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if ($_SESSION['is_logged'] === false) {
-    unset($_SESSION['email']);
-}
-include_once("include/db_config.php");
+
 ?>
 
 <!doctype html>
@@ -25,15 +19,15 @@ include_once("include/db_config.php");
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.php">Main</a>
-            <a class="navbar-brand" href="auth_page.php">Auth</a>
+            <a class="navbar-brand" href="/">Main</a>
+            <a class="navbar-brand" href="/auth_page">Auth</a>
         </div>
     </div>
     <div class="text-light">
         <?php
 
         if ($_SESSION['is_logged'] === true) {
-            echo "<a class='navbar-brand' href='profile.php'> Hello" . htmlspecialchars($_SESSION['email']) . "</a>";
+            echo "<a class='navbar-brand' href='/profile'> Hello, " . htmlspecialchars($_SESSION['email']) . "</a>";
         }
         ?>
 

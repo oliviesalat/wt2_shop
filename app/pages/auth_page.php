@@ -1,14 +1,13 @@
 <?php
-include_once("index_header.php");
-
+include_once(__DIR__ . "/../templates/index_header.php");
 if ($_SESSION['is_logged'] === false) {
     echo "You are not logged in!";
 } else {
-    header("Location: profile.php");
+    header("Location: /profile");
 }
 ?>
 
-    <form method="post" action="auth.php" class="container mt-4" style="max-width: 500px;">
+    <form method="post" action="/?action=auth" class="container mt-4" style="max-width: 500px;">
         <h2 class="mb-4">Auth</h2>
         <div class="mb-3">
             <label for="email">Email</label>
@@ -21,11 +20,11 @@ if ($_SESSION['is_logged'] === false) {
         <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
     <div class="d-flex justify-content-center my-4">
-        <a href="registration_page.php" class="btn btn-outline-primary">
+        <a href="/registration_page" class="btn btn-outline-primary">
             Haven`t registered yet?
         </a>
     </div>
 
 
 <?php
-include_once("index_footer.php");
+include_once(__DIR__ . "/../templates/index_footer.php");

@@ -1,6 +1,5 @@
 <?php
 
-
 class Database {
     private static ?mysqli $instance = null;
     private function __construct() {}

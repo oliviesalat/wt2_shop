@@ -1,5 +1,5 @@
 <?php
-include_once('index_header.php');
+include_once(__DIR__ . "/../templates/index_header.php");
 $db = Database::db_connect();
 
 $email = trim($_POST["email"]);
@@ -20,14 +20,13 @@ if ($stmt->fetch()) {
         $_SESSION['is_logged'] = true;
         $_SESSION['email'] = $email;
         $stmt->close();
-        header("Location: profile.php");
-        exit;
+        header("Location: /profile");
     } else {
         $_SESSION['is_logged'] = false;
         $stmt->close();
-        header("Location: auth_page.php");
-        exit;
+        header("Location: /auth_page");
     }
+    exit;
 }
 
-include_once('index_footer.php');
+include_once(__DIR__ . "/../templates/index_footer.php");
