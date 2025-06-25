@@ -36,7 +36,7 @@ switch ($uri) {
     case '/products':
         include __DIR__ . '/../app/pages/products.php';
         break;
-    case 'product':
+    case '/product':
         include __DIR__ . '/../app/pages/product.php';
         break;
     default:

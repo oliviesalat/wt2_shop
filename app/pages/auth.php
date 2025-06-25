@@ -5,6 +5,12 @@ if ($_SESSION['is_logged'] === false) {
 } else {
     header("Location: /profile");
 }
+
+if (isset($_SESSION['error_message'])) {
+
+    echo '<div class="alert alert-danger">' . $_SESSION['error_message'] . '</div>';
+    unset($_SESSION['error_message']);
+}
 ?>
 
     <form method="post" action="/?action=auth" class="container mt-4" style="max-width: 500px;">

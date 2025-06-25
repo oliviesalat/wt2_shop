@@ -2,7 +2,7 @@
 include_once(__DIR__ . "/../templates/index_header.php");
 $db = Database::db_connect();
 
-$page = $_GET['page'];
+$page = $_GET['page'] ?? 0;
 $offset = $page * 9;
 $products = Database::db_fetch_all("SELECT * FROM products LIMIT 9 OFFSET $offset");
 $categories = Database::db_fetch_all("SELECT * FROM categories");
@@ -14,7 +14,11 @@ $categories = Database::db_fetch_all("SELECT * FROM categories");
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
+                            <h5 class="card-title">
+                                <a href="/product?product_id=<?php echo urlencode($product['id']); ?>">
+                                    <?php echo htmlspecialchars($product['name']); ?>
+                                </a>
+                            </h5>
                             <p class="card-text flex-grow-1"><?php echo htmlspecialchars($product['description']); ?></p>
                             <p class="card-text"><strong>Price: </strong>$<?php echo htmlspecialchars($product['price']); ?></p>
                             <p class="card-text"><small class="text-muted">Category: <?php echo htmlspecialchars($categories[$product['category_id'] - 1]["category"]); ?></small></p>

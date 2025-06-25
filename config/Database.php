@@ -1,10 +1,19 @@
 <?php
 
-class Database {
+class Database
+{
     private static ?mysqli $instance = null;
-    private function __construct() {}
-    private function __clone() {}
-    public static function db_connect() : mysqli {
+
+    private function __construct()
+    {
+    }
+
+    private function __clone()
+    {
+    }
+
+    public static function db_connect(): mysqli
+    {
         if (self::$instance === null) {
             self::$instance = new mysqli("127.0.0.1", "root", "", "shop", 3306);
             if (self::$instance->connect_errno) {
@@ -14,7 +23,9 @@ class Database {
         }
         return self::$instance;
     }
-    public static function db_fetch_all($query) {
+
+    public static function db_fetch_all(string $query)
+    {
         $stmt = self::$instance->prepare($query);
         if (!$stmt) {
             die("Failed to run query: " . self::$instance->error);
@@ -28,6 +39,22 @@ class Database {
         return $result;
     }
 
+    public static function db_fetch_single($query, $parameter_type, $parameter)
+    {
+        $stmt = self::$instance->prepare($query);
+        if (!$stmt) {
+            die("Failed to run query: " . self::$instance->error);
+        }
+        $stmt->bind_param($parameter_type, $parameter);
+        if (!$stmt->execute()) {
+            die("Failed to execute query: " . $stmt->error);
+        }
+        $stmt->execute();
+        $stmt_result = $stmt->get_result();
+        $result = $stmt_result->fetch_assoc();
+        $stmt->close();
+        return $result;
+    }
 }
 
 

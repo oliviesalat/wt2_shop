@@ -1,32 +1,26 @@
 <?php
 include_once(__DIR__ . "/../templates/index_header.php");
+
 $db = Database::db_connect();
 
 $email = trim($_POST["email"]);
 $password = $_POST["password"];
 
-$stmt = $db->prepare("SELECT password FROM users WHERE email = ?");
-if (!$stmt) {
-    die("Failed to run query: " . $db->error);
+$user = Database::db_fetch_single(
+    "SELECT password FROM users WHERE email = ?",
+    "s",
+    $email
+);
+if (!$user) {
+    die("User not found");
 }
-$stmt->bind_param("s", $email);
-$stmt->execute();
-if (!$stmt->execute()) {
-    die("Failed to execute query: " . $stmt->error);
+if (password_verify($password, $user['password'])) {
+    $_SESSION['is_logged'] = true;
+    $_SESSION['email'] = $email;
+    header("Location: /profile");
+} else {
+    $_SESSION['is_logged'] = false;
+    $_SESSION['error_message'] = "Wrong password";
+    header("Location: /auth_page");
 }
-$stmt->bind_result($password_hash);
-if ($stmt->fetch()) {
-    if (password_verify($password, $password_hash)) {
-        $_SESSION['is_logged'] = true;
-        $_SESSION['email'] = $email;
-        $stmt->close();
-        header("Location: /profile");
-    } else {
-        $_SESSION['is_logged'] = false;
-        $stmt->close();
-        header("Location: /auth_page");
-    }
-    exit;
-}
-
-include_once(__DIR__ . "/../templates/index_footer.php");
+exit;
