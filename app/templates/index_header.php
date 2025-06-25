@@ -20,7 +20,7 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">Main</a>
-            <a class="navbar-brand" href="/auth_page">Auth</a>
+            <a class="navbar-brand" href="/products">Products</a>
         </div>
     </div>
     <div class="text-light">
@@ -28,6 +28,8 @@
 
         if ($_SESSION['is_logged'] === true) {
             echo "<a class='navbar-brand' href='/profile'> Hello, " . htmlspecialchars($_SESSION['email']) . "</a>";
+        } else {
+            echo "<a class='navbar-brand' href='/auth_page'>Auth</a>";
         }
         ?>
 

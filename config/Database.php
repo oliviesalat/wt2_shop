@@ -14,6 +14,19 @@ class Database {
         }
         return self::$instance;
     }
+    public static function db_fetch_all($query) {
+        $stmt = self::$instance->prepare($query);
+        if (!$stmt) {
+            die("Failed to run query: " . self::$instance->error);
+        }
+        if (!$stmt->execute()) {
+            die("Failed to execute query: " . $stmt->error);
+        }
+        $stmt_result = $stmt->get_result();
+        $result = $stmt_result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
 
 }
 

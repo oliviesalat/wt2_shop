@@ -5,4 +5,5 @@ if (session_status() === PHP_SESSION_NONE) {
 if ($_SESSION['is_logged'] === false) {
     unset($_SESSION['email']);
 }
+
 include_once(__DIR__ . "/../config/Database.php");
