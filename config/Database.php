@@ -15,7 +15,12 @@ class Database
     public static function db_connect(): mysqli
     {
         if (self::$instance === null) {
-            self::$instance = new mysqli("127.0.0.1", "root", "", "shop", 3306);
+            $host = getenv('DB_HOST') ?: '127.0.0.1';
+            $user = getenv('DB_USER') ?: 'root';
+            $pass = getenv('DB_PASS') ?: '';
+            $name = getenv('DB_NAME') ?: 'shop';
+            $port = getenv('DB_PORT') ?: 3306;
+            self::$instance = new mysqli($host, $user, $pass, $name, $port);
             if (self::$instance->connect_errno) {
                 die("Connection failed: " . self::$instance->connect_errno . self::$instance->connect_error);
             }
@@ -52,7 +57,6 @@ class Database
         if (!$stmt->execute()) {
             die("Failed to execute query: " . $stmt->error);
         }
-        $stmt->execute();
         $stmt_result = $stmt->get_result();
         $result = $stmt_result->fetch_assoc();
         $stmt->close();
