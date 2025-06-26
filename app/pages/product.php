@@ -25,27 +25,34 @@ endif;
     <div class="mt-4 d-flex justify-content-start">
         <button onclick="history.back()" class="btn btn-outline-primary">&laquo; Go Back</button>
     </div>
+
     <div class="mt-3">
-        <form action="/?action=add_to_cart" method="post" class="d-flex align-items-center gap-2">
-            <label>
-                <input type="number" name="quantity" value="1" min="1" class="form-control w-auto" required>
-            </label>
-            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
-            <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($product['name']); ?>">
-            <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($product['price']); ?>">
-            <button type="submit" class="btn btn-outline-success">
-                <i class="bi bi-cart-plus"></i> Add to Cart
-            </button>
-        </form>
-        <?php
-        if (isset($_SESSION['error_cart'])) {
-            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
-            echo $_SESSION['error_cart'];
-            unset($_SESSION['error_cart']);
-            echo '</div>';
-        }
-        ?>
+<?php if (isset($_SESSION['user_id'])): { ?>
+    <form action="/?action=add_to_cart" method="post" class="d-flex align-items-center gap-2">
+        <label>
+            <input type="number" name="quantity" value="1" min="1" class="form-control w-auto" required>
+        </label>
+        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
+        <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($product['name']); ?>">
+        <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($product['price']); ?>">
+        <button type="submit" class="btn btn-outline-success">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+        </button>
+    </form>
+    <?php
+} else : ?>
+<p>Log in to start shopping.</p>
+    <?php
+    if (isset($_SESSION['error_cart'])) {
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+        echo $_SESSION['error_cart'];
+        unset($_SESSION['error_cart']);
+        echo '</div>';
+    }
+    ?>
+<?php endif; ?>
     </div>
-<?php
-include_once(__DIR__ . "/../templates/index_footer.php");
-?>
+
+    <?php
+    include_once(__DIR__ . "/../templates/index_footer.php");
+    ?>
