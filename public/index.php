@@ -53,7 +53,9 @@ switch ($uri) {
     case '/order_success':
         include __DIR__ . '/../app/pages/order_success.php';
         break;
-
+    case '/orders_page':
+        include __DIR__ . '/../app/pages/orders_page.php';
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";

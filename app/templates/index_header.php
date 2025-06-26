@@ -21,9 +21,11 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">Main</a>
             <a class="navbar-brand" href="/products">Products</a>
+            <a class="navbar-brand" href="/orders_page">My Orders</a>
         </div>
     </div>
     <div class="text-light">
+
         <a class="navbar-brand" href="/cart">Cart</a>
         <?php
 

@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once(__DIR__ . "/../templates/index_header.php");
 
 $pdf_file = $_SESSION['order_pdf'] ?? null;
