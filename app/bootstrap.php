@@ -12,3 +12,6 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 include_once(__DIR__ . "/../config/Database.php");
+
+
+// php -S localhost:8000 -t public;

@@ -2,7 +2,7 @@
 include_once(__DIR__ . "/../templates/index_header.php");
 ?>
 
-    <form method="post" action="../actions/register.php" class="container mt-4" style="max-width: 500px;">
+    <form method="post" action="/?action=register" class="container mt-4" style="max-width: 500px;">
         <h2 class="mb-4">Register</h2>
 
         <div class="mb-3">

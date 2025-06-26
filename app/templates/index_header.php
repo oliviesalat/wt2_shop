@@ -22,6 +22,9 @@
             <a class="navbar-brand" href="/">Main</a>
             <a class="navbar-brand" href="/products">Products</a>
             <a class="navbar-brand" href="/orders_page">My Orders</a>
+            <?php if ($_SESSION['role_id'] == 3) { ?>
+                <a class="navbar-brand" href="/admin_panel">Admin panel</a>
+            <?php }?>
         </div>
     </div>
     <div class="text-light">

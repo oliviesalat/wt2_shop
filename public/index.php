@@ -7,6 +7,9 @@ if ($action) {
         case 'auth':
             include_once(__DIR__ . "/../app/actions/auth.php");
             break;
+        case 'register':
+            include_once(__DIR__ . "/../app/actions/register.php");
+            break;
         case 'logout':
             include_once(__DIR__ . "/../app/actions/logout.php");
             break;
@@ -17,6 +20,9 @@ if ($action) {
             break;
         case 'place_order':
             include_once(__DIR__ . "/../app/actions/place_order.php");
+            break;
+        case 'add_product':
+            include_once(__DIR__ . "/../app/actions/add_product.php");
             break;
         default:
             include_once __DIR__ . '/../app/pages/home.php';
@@ -55,6 +61,9 @@ switch ($uri) {
         break;
     case '/orders_page':
         include __DIR__ . '/../app/pages/orders_page.php';
+        break;
+    case '/admin_panel':
+        include __DIR__ . '/../app/pages/admin_panel.php';
         break;
     default:
         http_response_code(404);

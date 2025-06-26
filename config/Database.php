@@ -62,6 +62,21 @@ class Database
         $stmt->close();
         return $result;
     }
+    public static function insert($query, array $params = []): int {
+        $stmt = self::$instance->prepare($query);
+        if (!$stmt) {
+            die("Failed to run query: " . self::$instance->error);
+        }
+        if (!empty($params)) {
+            $stmt->bind_param($params['types'], ...$params['fields']);
+        }
+        if (!$stmt->execute()) {
+            die("Failed to execute query: " . $stmt->error);
+        }
+        $affected_rows = $stmt->affected_rows;
+        $stmt->close();
+        return $affected_rows;
+    }
 
 }
 
