@@ -1,21 +1,20 @@
 <?php
-include_once (__DIR__ . "/../app/bootstrap.php");
+include_once(__DIR__ . "/../app/bootstrap.php");
 
 $action = $_GET['action'] ?? '';
 if ($action) {
     switch ($action) {
         case 'auth':
-            include_once (__DIR__ . "/../app/actions/auth.php");
+            include_once(__DIR__ . "/../app/actions/auth.php");
             break;
         case 'logout':
-            include_once (__DIR__ . "/../app/actions/logout.php");
+            include_once(__DIR__ . "/../app/actions/logout.php");
             break;
         case 'remove_from_cart':
         case 'add_to_cart':
         case 'edit_quantity':
-            include_once (__DIR__ . "/../app/actions/cart_action.php");
+            include_once(__DIR__ . "/../app/actions/cart_action.php");
             break;
-
         default:
             include_once __DIR__ . '/../app/pages/home.php';
             break;

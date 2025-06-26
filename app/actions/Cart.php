@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Cart
 {
     private static ?mysqli $db;
@@ -9,35 +11,46 @@ class Cart
         self::$db = Database::db_connect();
     }
 
-    public static function add_to_cart($product_id, $product_name, $quantity, $user_id): void
+    #[NoReturn] public static function add_to_cart($product_id, $product_name, $quantity, $user_id): void
     {
         if (!self::$db) {
             self::init();
         }
         self::$db->begin_transaction();
-        $query = "SELECT COUNT(*) FROM cart_items WHERE user_id = ?";
-        $res = Database::db_fetch_single($query, 'i', $user_id);
-        $count = $res["COUNT(*)"];
-
-        if ($count < 5) {
-            $stmt = self::$db->prepare("INSERT INTO cart_items (product_id, product_name, user_id, quantity) 
-                            VALUES (?, ?, ?, ?)
-                            ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);");
-            $stmt->bind_param("isii", $product_id, $product_name, $user_id, $quantity);
-            if ($stmt->execute()) {
-                $stmt->close();
-                self::$db->commit();
-                header('location: /cart');
-                exit;
-            } else {
-                self::$db->rollback();
-                die("Error: " . self::$db->error);
-            }
-        } else {
+        $stmt = self::$db->prepare("INSERT INTO cart_items (product_id, product_name, user_id, quantity)
+            SELECT ?, ?, ?, ?
+            FROM DUAL   
+            WHERE ( 
+            (SELECT COUNT(*) FROM cart_items WHERE user_id = ?) < 5
+            OR EXISTS (
+            SELECT 1 FROM cart_items WHERE user_id = ? AND product_id = ?))
+            ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);");
+        $stmt->bind_param(
+            "isiiiii",
+            $product_id,
+            $product_name,
+            $user_id,
+            $quantity,
+            $user_id,
+            $user_id,
+            $product_id
+        );
+        if (!$stmt->execute()) {
+            self::$db->rollback();
+            die("Execute failed: " . $stmt->error);
+        }
+        if ($stmt->affected_rows === 0) {
             self::$db->rollback();
             $_SESSION['error_cart'] = 'You already have 5 items in your cart.';
             header('location: /product?product_id=' . $product_id);
+            exit;
         }
+        $stmt->close();
+
+        self::$db->commit();
+
+        header('location: /cart');
+        exit;
     }
 
     public static function remove_from_cart($product_id, $user_id): void
