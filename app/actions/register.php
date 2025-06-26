@@ -21,7 +21,7 @@ try {
 ?>
 <h2>You have successfully registered</h2>
     <div class="d-flex justify-content-center my-4">
-        <a href="auth_page.php" class="btn btn-outline-primary">
+        <a href="/auth_page" class="btn btn-outline-primary">
             Return to auth
         </a>
     </div>

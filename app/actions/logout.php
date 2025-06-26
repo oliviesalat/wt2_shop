@@ -1,8 +1,6 @@
 <?php
-include_once(__DIR__ . "/../templates/index_header.php");
 
 $_SESSION['is_logged'] = false;
 unset($_SESSION['email']);
+unset($_SESSION['user_id']);
 header("Location: /");
-
-include_once(__DIR__ . "/../templates/index_footer.php");

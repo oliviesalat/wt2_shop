@@ -24,11 +24,14 @@ class Database
         return self::$instance;
     }
 
-    public static function db_fetch_all(string $query)
+    public static function db_fetch_all(string $query, array $params = []): array
     {
         $stmt = self::$instance->prepare($query);
         if (!$stmt) {
             die("Failed to run query: " . self::$instance->error);
+        }
+        if (!empty($params)) {
+            $stmt->bind_param($params['types'], ...$params['fields']);
         }
         if (!$stmt->execute()) {
             die("Failed to execute query: " . $stmt->error);
@@ -55,6 +58,7 @@ class Database
         $stmt->close();
         return $result;
     }
+
 }
 
 

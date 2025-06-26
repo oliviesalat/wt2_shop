@@ -24,6 +24,7 @@
         </div>
     </div>
     <div class="text-light">
+        <a class="navbar-brand" href="/cart">Cart</a>
         <?php
 
         if ($_SESSION['is_logged'] === true) {
