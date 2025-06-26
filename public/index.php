@@ -15,6 +15,9 @@ if ($action) {
         case 'edit_quantity':
             include_once(__DIR__ . "/../app/actions/cart_action.php");
             break;
+        case 'place_order':
+            include_once(__DIR__ . "/../app/actions/place_order.php");
+            break;
         default:
             include_once __DIR__ . '/../app/pages/home.php';
             break;
@@ -46,6 +49,9 @@ switch ($uri) {
         break;
     case '/cart':
         include __DIR__ . '/../app/pages/cart.php';
+        break;
+    case '/order_success':
+        include __DIR__ . '/../app/pages/order_success.php';
         break;
 
     default:

@@ -16,6 +16,7 @@ if (isset($user_id) && $_SESSION['is_logged']) {
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>
+                    <th>Price</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -31,10 +32,10 @@ if (isset($user_id) && $_SESSION['is_logged']) {
                                            min="1" class="form-control w-auto" required
                                            onchange="this.form.submit()">
                                 </label>
-
                             </form>
-
-
+                        </td>
+                        <td>
+                            <?= htmlspecialchars($item['product_price'])?>
                         </td>
                         <td>
                             <form method="post" action="/?action=remove_from_cart" class="container mt-4" style="max-width: 500px;">
@@ -47,6 +48,10 @@ if (isset($user_id) && $_SESSION['is_logged']) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <form method="post" action="/?action=place_order" class="mt-4">
+                <label for="user_id"></label><input type="hidden" id="user_id" value="<?=$user_id?>">
+                <button type="submit" class="btn btn-success">Place Order</button>
+            </form>
         <?php else: ?>
             <p>Your cart is empty.</p>
         <?php endif; ?>

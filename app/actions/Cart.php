@@ -1,7 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\NoReturn;
-
 class Cart
 {
     private static ?mysqli $db;
@@ -11,14 +9,14 @@ class Cart
         self::$db = Database::db_connect();
     }
 
-    #[NoReturn] public static function add_to_cart($product_id, $product_name, $quantity, $user_id): void
+    public static function add_to_cart($product_id, $product_name, $quantity, $user_id, $product_price): void
     {
         if (!self::$db) {
             self::init();
         }
         self::$db->begin_transaction();
-        $stmt = self::$db->prepare("INSERT INTO cart_items (product_id, product_name, user_id, quantity)
-            SELECT ?, ?, ?, ?
+        $stmt = self::$db->prepare("INSERT INTO cart_items (product_id, product_name, product_price, user_id, quantity)
+            SELECT ?, ?, ?, ?, ?
             FROM DUAL   
             WHERE ( 
             (SELECT COUNT(*) FROM cart_items WHERE user_id = ?) < 5
@@ -26,9 +24,10 @@ class Cart
             SELECT 1 FROM cart_items WHERE user_id = ? AND product_id = ?))
             ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);");
         $stmt->bind_param(
-            "isiiiii",
+            "isdiiiii",
             $product_id,
             $product_name,
+            $product_price,
             $user_id,
             $quantity,
             $user_id,
@@ -85,5 +84,23 @@ class Cart
             die("Error: " . self::$db->error);
         }
         $stmt->close();
+    }
+    public static function fetch_cart($user_id)
+    {
+        if (!self::$db) {
+            self::init();
+        }
+        $query = "SELECT * FROM cart_items WHERE user_id = ?";
+        $stmt = self::$db->prepare($query);
+        if (!$stmt) {
+            die("Error: " . self::$db->error);
+        }
+        $stmt->bind_param("i", $user_id);
+        if (!$stmt->execute()) {
+            die("Error: " . self::$db->error);
+        }
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result;
     }
 }

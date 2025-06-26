@@ -27,9 +27,12 @@ endif;
     </div>
     <div class="mt-3">
         <form action="/?action=add_to_cart" method="post" class="d-flex align-items-center gap-2">
-            <input type="number" name="quantity" value="1" min="1" class="form-control w-auto" required>
+            <label>
+                <input type="number" name="quantity" value="1" min="1" class="form-control w-auto" required>
+            </label>
             <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
             <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($product['name']); ?>">
+            <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($product['price']); ?>">
             <button type="submit" class="btn btn-outline-success">
                 <i class="bi bi-cart-plus"></i> Add to Cart
             </button>
