@@ -1,0 +1,4 @@
+/vendor/
+.env
+/public/orders/*
+!/public/orders/.gitkeep
