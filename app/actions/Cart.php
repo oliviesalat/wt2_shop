@@ -85,6 +85,7 @@ class Cart
         }
         $stmt->close();
     }
+
     public static function fetch_cart($user_id)
     {
         if (!self::$db) {
@@ -102,5 +103,23 @@ class Cart
         $result = $stmt->get_result();
         $stmt->close();
         return $result;
+    }
+
+    public static function delete_cart($user_id)
+    {
+        if (!self::$db) {
+            self::init();
+        }
+        $stmt = self::$db->prepare("DELETE FROM cart_items WHERE user_id = ?");
+        if (!$stmt) {
+            die("Error: " . self::$db->error);
+        }
+        $stmt->bind_param("i", $user_id);
+        if (!$stmt->execute()) {
+            return false;
+        };
+        $stmt->close();
+        return true;
+
     }
 }
