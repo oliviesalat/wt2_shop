@@ -2,3 +2,4 @@
 .env
 /public/orders/*
 !/public/orders/.gitkeep
+.idea/

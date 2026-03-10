@@ -50,4 +50,3 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 0;
 
 <?php
 include_once(__DIR__ . "/../templates/index_footer.php");
-
